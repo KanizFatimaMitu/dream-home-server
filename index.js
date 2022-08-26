@@ -24,6 +24,13 @@ const client = new MongoClient(uri,{
     try {
      const packagesCollection = client.db("dream-home").collection("package")
      const bookingsCollection = client.db("dream-home").collection("bookings")
+     const designsCollection = client.db("dream-home").collection("designs")
+
+     // http://localhost:5000/designs
+     app.get('/designs', async (req, res) => {
+      const designs = await designsCollection.find({}).toArray();
+      res.send(designs)
+    })
 
     // http://localhost:5000/booking
      app.post('/booking', async (req, res) => {
@@ -32,8 +39,8 @@ const client = new MongoClient(uri,{
       res.send(confirmBooking)
     })
 
-    // http://localhost:5000/package
-     app.get('/package', async (req, res) => {
+    // http://localhost:5000/packages
+     app.get('/packages', async (req, res) => {
       const packages = await packagesCollection.find({}).toArray();
       res.send(packages)
     })
