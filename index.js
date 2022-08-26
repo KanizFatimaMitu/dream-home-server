@@ -23,6 +23,16 @@ const client = new MongoClient(uri,{
   async function run() {
     try {
      const packagesCollection = client.db("dream-home").collection("package")
+     const bookingsCollection = client.db("dream-home").collection("bookings")
+
+    // http://localhost:5000/booking
+     app.post('/booking', async (req, res) => {
+      const newBooking = req.body
+      const confirmBooking = await bookingsCollection.insertOne(newBooking);
+      res.send(confirmBooking)
+    })
+
+    // http://localhost:5000/package
      app.get('/package', async (req, res) => {
       const packages = await packagesCollection.find({}).toArray();
       res.send(packages)
